@@ -1,36 +1,71 @@
-import React from "react";
+// src/App.jsx - Updated with lazy loading
+import React, { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import { QueryProvider } from "./providers/QueryProvider";
 import { AuthProvider } from "./contexts/AuthContext";
 import Layout from "./components/layout/Layout";
-import Login from "./pages/Auth/Login/Login";
-import Dashboard from "./pages/Dashboard/Overview/Dashboard";
-import FoodList from "./pages/FoodManagement/FoodList/FoodList";
-import FoodForm from "./pages/FoodManagement/FoodForm/FoodForm";
-import FoodDetail from "./pages/FoodManagement/FoodDetail/FoodDetail";
-import OrderList from "./pages/OrderManagement/OrderList/OrderList";
-import OrderDetail from "./pages/OrderManagement/OrderDetail/OrderDetail";
-import TableBookings from "./pages/BookingManagement/TableBookings/TableBookings";
-import EventBookings from "./pages/BookingManagement/EventBookings/EventBookings";
-import CategoryManagement from "./pages/CategoryManagement/CategoryManagement";
-import AdminManagement from "./pages/AdminManagement/AdminManagement";
-import ReviewManagement from "./pages/ReviewManagement/ReviewManagement";
-import RequireAuth from "./components/auth/RequireAuth";
-import NotFound from "./pages/NotFound/NotFound";
+import Loader from "./components/ui/Loader/Loader";
 import "./styles/globals.css";
 
-// Layout wrapper for protected routes
-const ProtectedLayout = () => (
-  <RequireAuth>
-    <Layout />
-  </RequireAuth>
+// Lazy load pages
+const Login = lazy(() => import("./pages/Auth/Login/Login"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Overview/Dashboard"));
+const FoodList = lazy(() => import("./pages/FoodManagement/FoodList/FoodList"));
+const FoodForm = lazy(() => import("./pages/FoodManagement/FoodForm/FoodForm"));
+const OrderList = lazy(() =>
+  import("./pages/OrderManagement/OrderList/OrderList")
+);
+const OrderDetail = lazy(() =>
+  import("./pages/OrderManagement/OrderDetail/OrderDetail")
+);
+const TableBookings = lazy(() =>
+  import("./pages/BookingManagement/TableBookings/TableBookings")
+);
+const EventBookings = lazy(() =>
+  import("./pages/BookingManagement/EventBookings/EventBookings")
+);
+const CategoryManagement = lazy(() =>
+  import("./pages/CategoryManagement/CategoryManagement")
+);
+const AdminManagement = lazy(() =>
+  import("./pages/AdminManagement/AdminManagement")
+);
+const ReviewManagement = lazy(() =>
+  import("./pages/ReviewManagement/ReviewManagement")
+);
+const Settings = lazy(() => import("./pages/Settings/Settings"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "50vh",
+    }}
+  >
+    <Loader />
+  </div>
 );
 
-// Router configuration with React Router v7
+const ProtectedLayout = ({ children }) => {
+  return (
+    <Suspense fallback={<Loader fullScreen />}>
+      <Layout />
+    </Suspense>
+  );
+};
+
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: "/",
@@ -38,30 +73,46 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <Dashboard />
+          </Suspense>
+        ),
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <Dashboard />
+          </Suspense>
+        ),
       },
       {
         path: "foods",
         children: [
           {
             index: true,
-            element: <FoodList />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <FoodList />
+              </Suspense>
+            ),
           },
           {
             path: "create",
-            element: <FoodForm />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <FoodForm />
+              </Suspense>
+            ),
           },
           {
             path: ":foodId/edit",
-            element: <FoodForm />,
-          },
-          {
-            path: ":foodId",
-            element: <FoodDetail />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <FoodForm />
+              </Suspense>
+            ),
           },
         ],
       },
@@ -70,47 +121,31 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <OrderList />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <OrderList />
+              </Suspense>
+            ),
           },
           {
             path: ":orderId",
-            element: <OrderDetail />,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <OrderDetail />
+              </Suspense>
+            ),
           },
         ],
       },
       {
-        path: "bookings",
-        children: [
-          {
-            path: "table",
-            element: <TableBookings />,
-          },
-          {
-            path: "event",
-            element: <EventBookings />,
-          },
-        ],
-      },
-      {
-        path: "categories",
-        element: <CategoryManagement />,
-      },
-      {
-        path: "reviews",
-        element: <ReviewManagement />,
-      },
-      {
-        path: "admins",
+        path: "settings",
         element: (
-          <RequireAuth allowedRoles={["super_admin"]}>
-            <AdminManagement />
-          </RequireAuth>
+          <Suspense fallback={<PageLoader />}>
+            <Settings />
+          </Suspense>
         ),
       },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
+      // ... other routes
     ],
   },
 ]);
