@@ -1,0 +1,311 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.required {
+    color: var(--danger);
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.iconContainer {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.icon {
+    font-size: 1rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    padding-left: 2.75rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    appearance: none;
+}
+
+.input.hasIcon {
+    padding-left: 2.75rem;
+}
+
+.input:not(.hasIcon) {
+    padding-left: 1rem;
+}
+
+.input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.input:hover {
+    border-color: var(--text-secondary);
+}
+
+.input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+.input:disabled {
+    background: var(--background);
+    border-color: var(--border);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.input:disabled::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Password Toggle */
+.passwordToggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.passwordToggle:hover {
+    color: var(--text-primary);
+    background: var(--background);
+}
+
+.toggleIcon {
+    font-size: 1rem;
+}
+
+/* Error States */
+.hasError .input {
+    border-color: var(--danger);
+    background: linear-gradient(0deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.05)), var(--surface);
+}
+
+.hasError .input:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.hasError .iconContainer {
+    color: var(--danger);
+}
+
+.errorMessage {
+    color: var(--danger);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+    animation: shake 0.5s ease-in-out;
+}
+
+.helperText {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+/* Sizes */
+.size--sm .input {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+.size--sm .iconContainer {
+    left: 0.75rem;
+}
+
+.size--sm .input.hasIcon {
+    padding-left: 2.25rem;
+}
+
+.size--lg .input {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+}
+
+.size--lg .iconContainer {
+    left: 1.25rem;
+}
+
+.size--lg .input.hasIcon {
+    padding-left: 3.25rem;
+}
+
+/* Full Width */
+.fullWidth {
+    width: 100%;
+}
+
+/* Readonly State */
+.input[readonly] {
+    background: var(--background);
+    border-color: var(--border);
+    cursor: default;
+}
+
+.input[readonly]:focus {
+    border-color: var(--border);
+    box-shadow: none;
+    transform: none;
+}
+
+/* Loading State */
+.loading .input {
+    background-image: linear-gradient(90deg,
+            var(--border) 25%,
+            var(--background) 50%,
+            var(--border) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+}
+
+/* Focus animation */
+.input:focus+.focusRing {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 0.875rem;
+    border: 2px solid var(--primary);
+    animation: focusPulse 2s infinite;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes focusPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.2;
+        transform: scale(1.02);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .input {
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+    }
+
+    .input.hasIcon {
+        padding-left: 3rem;
+    }
+
+    .iconContainer {
+        left: 1rem;
+    }
+
+    .passwordToggle {
+        right: 0.875rem;
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .input {
+        background: var(--surface-dark, #1e293b);
+        border-color: var(--border-dark, #334155);
+        color: var(--text-primary-dark, #f1f5f9);
+    }
+
+    .input:hover {
+        border-color: var(--text-secondary-dark, #94a3b8);
+    }
+
+    .input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .input:disabled {
+        background: var(--background-dark, #0f172a);
+        border-color: var(--border-dark, #334155);
+        color: var(--text-secondary-dark, #94a3b8);
+    }
+
+    .hasError .input {
+        border-color: var(--danger);
+        background: linear-gradient(0deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.1)), var(--surface-dark);
+    }
+}

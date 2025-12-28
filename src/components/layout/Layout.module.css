@@ -1,0 +1,240 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--background);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: var(--sidebar-width, 250px);
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding: 1.5rem;
+    background: var(--background);
+    animation: contentFadeIn 0.3s ease;
+    position: relative;
+}
+
+/* Sidebar Collapsed State */
+.sidebarCollapsed .mainContent {
+    margin-left: var(--sidebar-collapsed-width, 70px);
+}
+
+/* Mobile Overlay */
+.mobileOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobileOverlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Header Area */
+.headerArea {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    animation: headerSlideDown 0.3s ease;
+}
+
+/* Scrollbar Styling */
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Page Transitions */
+.pageEnter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.pageEnterActive {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.pageExit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pageExitActive {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Layout Variations */
+.layout--compact .content {
+    padding: 1rem;
+}
+
+.layout--spacious .content {
+    padding: 2rem;
+}
+
+/* Loading State */
+.layoutLoading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Error State */
+.layoutError {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+}
+
+.errorIcon {
+    font-size: 4rem;
+    color: var(--danger);
+    margin-bottom: 1rem;
+    animation: shake 0.5s ease-in-out;
+}
+
+.errorTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.errorMessage {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Animations */
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes headerSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .mainContent {
+        margin-left: var(--sidebar-collapsed-width, 70px);
+    }
+}
+
+@media (max-width: 768px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .mainContent {
+        margin-left: 0;
+        margin-top: var(--header-height, 64px);
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .sidebarCollapsed .mainContent {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .content {
+        padding: 0.75rem;
+    }
+
+    .layout--spacious .content {
+        padding: 1rem;
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .layout {
+        background: var(--background-dark, #0f172a);
+    }
+
+    .content {
+        background: var(--background-dark, #0f172a);
+    }
+
+    .headerArea {
+        background: var(--surface-dark, #1e293b);
+        border-bottom-color: var(--border-dark, #334155);
+    }
+}

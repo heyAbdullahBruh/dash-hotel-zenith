@@ -1,0 +1,332 @@
+.imageUploader {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+}
+
+.dropzone:hover {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.1) 100%);
+    transform: translateY(-2px);
+}
+
+.dropzone.dragActive {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.2) 100%);
+    transform: scale(1.02);
+}
+
+.dropzone.dragActive .uploadIcon {
+    transform: scale(1.2) translateY(-5px);
+    color: var(--primary);
+}
+
+.uploadIcon {
+    font-size: 3rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.dropzoneText {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.dropzoneHint {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Image Grid */
+.imageGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.imageItem {
+    position: relative;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    animation: imageAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imageItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.imageItem:hover .removeButton {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.previewImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.imageItem:hover .previewImage {
+    transform: scale(1.1);
+}
+
+.removeButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.removeButton:hover {
+    transform: scale(1.1) !important;
+}
+
+.imageInfo {
+    padding: 0.75rem;
+    background: var(--surface);
+}
+
+.imageName {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+}
+
+.imageSize {
+    font-size: 0.625rem;
+    color: var(--text-secondary);
+    display: block;
+}
+
+/* Counter */
+.counter {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    background: var(--background);
+    border-radius: 0.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Progress Bar */
+.uploadProgress {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
+    transition: width 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progressBar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+/* Error State */
+.error {
+    color: var(--danger);
+    font-size: 0.875rem;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 0.75rem;
+    border: 1px solid var(--danger);
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Image Actions */
+.imageActions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.imageItem:hover .imageActions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.actionButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.actionButton:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.actionButton:active {
+    transform: scale(0.95);
+}
+
+/* Animations */
+@keyframes imageAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dropzone {
+        padding: 2rem 1rem;
+    }
+
+    .uploadIcon {
+        font-size: 2.5rem;
+    }
+
+    .dropzoneText {
+        font-size: 1rem;
+    }
+
+    .imageGrid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .imageWrapper {
+        height: 120px;
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .dropzone {
+        background: var(--surface-dark, #1e293b);
+        border-color: var(--border-dark, #334155);
+    }
+
+    .dropzone:hover {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.2) 100%);
+    }
+
+    .imageItem {
+        background: var(--surface-dark, #1e293b);
+        border-color: var(--border-dark, #334155);
+    }
+
+    .imageInfo {
+        background: var(--surface-dark, #1e293b);
+    }
+
+    .counter {
+        background: var(--background-dark, #0f172a);
+    }
+}
