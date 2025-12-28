@@ -1,0 +1,334 @@
+.tableBookings {
+    padding: 1.5rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.headerLeft {
+    flex: 1;
+}
+
+.headerRight {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.viewToggle {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--background);
+    padding: 0.25rem;
+    border-radius: 0.75rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.statCard {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+}
+
+.statCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.statContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.statIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.statCard:hover .statIcon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.statInfo {
+    flex: 1;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Filter Card */
+.filterCard {
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
+    border: 1px solid var(--border);
+}
+
+.filterRow {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1rem;
+    align-items: end;
+}
+
+.searchBox {
+    grid-column: 1;
+}
+
+/* Table Card */
+.tableCard {
+    margin-top: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+/* Calendar Card */
+.calendarCard {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+}
+
+/* Booking Item Styles */
+.bookingId {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.bookingId strong {
+    font-size: 1rem;
+    color: var(--primary);
+    font-family: 'Courier New', monospace;
+}
+
+.bookingTime {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: var(--background);
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.75rem;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.customerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.customerName {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.customerPhone {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.bookingDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.detailRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.detailRow svg {
+    color: var(--text-secondary);
+    width: 14px;
+}
+
+.statusCell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.statusActions {
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .filterRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tableBookings {
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .headerRight {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filterRow {
+        grid-template-columns: 1fr;
+    }
+
+    .statContent {
+        padding: 1rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+
+    .actionButtons,
+    .statusActions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 640px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .statContent {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .statIcon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .viewToggle {
+        width: 100%;
+    }
+
+    .viewToggle button {
+        flex: 1;
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .filterCard {
+        background: linear-gradient(135deg, var(--surface-dark, #1e293b) 0%, var(--background-dark, #0f172a) 100%);
+        border-color: var(--border-dark, #334155);
+    }
+
+    .bookingTime {
+        background: var(--background-dark, #0f172a);
+    }
+
+    .viewToggle {
+        background: var(--background-dark, #0f172a);
+    }
+}
