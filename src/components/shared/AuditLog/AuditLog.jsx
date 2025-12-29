@@ -1,5 +1,5 @@
 // src/components/shared/AuditLog/AuditLog.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import Card from "../../ui/Card/Card";
@@ -9,7 +9,6 @@ import Select from "../../ui/Select/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
-  faFilter,
   faDownload,
   faEye,
   faTrash,

@@ -1,0 +1,135 @@
+.virtualizedList {
+    position: relative;
+    overflow: hidden !important;
+    background: var(--surface);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    animation: virtualizedAppear 0.5s ease;
+}
+
+.virtualizedList::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.virtualizedList::-webkit-scrollbar-track {
+    background: var(--background);
+    border-radius: 4px;
+}
+
+.virtualizedList::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.virtualizedList::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Custom scrollbar for Firefox */
+.virtualizedList {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--background);
+}
+
+/* Animation for virtual items */
+@keyframes itemAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.virtualizedList>div>div>div {
+    animation: itemAppear 0.3s ease;
+}
+
+/* Smooth scrolling */
+.virtualizedList {
+    scroll-behavior: smooth;
+}
+
+/* Loading state */
+.virtualizedList.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            var(--primary) 0%,
+            var(--primary-dark) 50%,
+            var(--primary) 100%);
+    background-size: 200% 100%;
+    animation: loadingBar 1.5s infinite linear;
+    z-index: 100;
+}
+
+/* Empty state */
+.virtualizedList.empty::after {
+    content: 'No items to display';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Hover effects */
+.virtualizedList>div>div>div:hover {
+    z-index: 10;
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+}
+
+/* Animations */
+@keyframes virtualizedAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes loadingBar {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Performance optimizations */
+.virtualizedList>div>div {
+    will-change: transform;
+}
+
+.virtualizedList>div>div>div {
+    will-change: transform, opacity;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .virtualizedList::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    .virtualizedList {
+        scrollbar-width: thin;
+    }
+}
