@@ -47,11 +47,11 @@ const TextArea = forwardRef(
     // Auto-grow functionality
     useEffect(() => {
       if (autoGrow && textareaRef.current) {
+        // eslint-disable-next-line react-hooks/immutability
         adjustHeight();
       }
-    }, [value, autoGrow, adjustHeight]);
+    }, [value, autoGrow]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const adjustHeight = () => {
       const textarea = textareaRef.current;
       if (!textarea) return;

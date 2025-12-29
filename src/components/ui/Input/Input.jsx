@@ -32,10 +32,15 @@ const Input = forwardRef(
       },
       className
     );
-
+// console.log(label);
     return (
       <div className={styles.inputWrapper}>
-        {label && (
+        {label ? (
+          <label className={styles.label}>
+            {label}
+            {required && <span className={styles.required}>*</span>}
+          </label>
+        ) : (
           <label className={styles.label}>
             {label}
             {required && <span className={styles.required}>*</span>}

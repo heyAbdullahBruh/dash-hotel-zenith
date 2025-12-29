@@ -12,26 +12,24 @@ export const foodService = {
   },
 
   createFood: async (foodData) => {
-    // Handle multipart form data for image upload
     const formData = new FormData();
 
     Object.keys(foodData).forEach((key) => {
       if (key === "images" && Array.isArray(foodData.images)) {
-        foodData.images.forEach((image, index) => {
-          formData.append(`images[${index}]`, image);
+        foodData.images.forEach((image) => {
+          formData.append("images", image); // ✅ same field name
         });
       } else if (Array.isArray(foodData[key])) {
         formData.append(key, JSON.stringify(foodData[key]));
-      } else {
+      } else if (foodData[key] !== undefined && foodData[key] !== null) {
         formData.append(key, foodData[key]);
       }
     });
 
     const response = await axios.post("/api/admin/foods/create", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      withCredentials: true, // required if admin auth uses cookies
     });
+
     return response.data;
   },
 
@@ -40,8 +38,8 @@ export const foodService = {
 
     Object.keys(foodData).forEach((key) => {
       if (key === "images" && Array.isArray(foodData.images)) {
-        foodData.images.forEach((image, index) => {
-          formData.append(`images[${index}]`, image);
+        foodData.images.forEach((image) => {
+          formData.append("images", image);
         });
       } else if (Array.isArray(foodData[key])) {
         formData.append(key, JSON.stringify(foodData[key]));

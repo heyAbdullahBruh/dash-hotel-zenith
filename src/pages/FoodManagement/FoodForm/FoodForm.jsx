@@ -56,13 +56,13 @@ const FoodForm = () => {
     queryFn: () => foodService.getFood(foodId),
     enabled: isEditing,
   });
-
+console.log(foodData?.data);
   // Fetch categories
   const { data: categories, isLoading: categoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () => categoryService.getAllCategories(),
   });
-
+// console.log(categories);
   const {
     register,
     handleSubmit,
@@ -84,12 +84,12 @@ const FoodForm = () => {
   // Set form values when food data is loaded
   useEffect(() => {
     if (foodData && isEditing) {
-      Object.keys(foodData).forEach((key) => {
+      Object.keys(foodData?.data).forEach((key) => {
         if (key in foodSchema.shape) {
-          setValue(key, foodData[key]);
+          setValue(key, foodData?.data[key]);
         }
       });
-      setImages(foodData.images || []);
+      setImages(foodData?.data?.images || []);
     }
   }, [foodData, isEditing, setValue]);
 
