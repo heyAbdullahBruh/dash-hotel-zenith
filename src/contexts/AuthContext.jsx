@@ -1,64 +1,79 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { authService } from '../services/api/authService';
-import { useMutation, useQuery } from '@tanstack/react-query';
+// AuthContext.jsx
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
+import { authService } from "../services/api/authService";
+import { useQuery } from "@tanstack/react-query";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);
 
-  // Check authentication status on mount
-  const { data: profile, isLoading: profileLoading } = useQuery({
-    queryKey: ['profile'],
+  // Use useEffect to set authChecked to true after initial check
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ["profile"],
     queryFn: authService.getProfile,
     retry: false,
-    enabled: !user,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
   useEffect(() => {
-    if (profile && !user) {
-      setUser(profile);
+    if (!isLoading) {
+      if (isSuccess && data) {
+        setUser(data?.data);
+      }
+      // Whether success or error, mark auth as checked
+      setAuthChecked(true);
     }
-    setIsLoading(profileLoading);
-  }, [profile, profileLoading]);
+  }, [isLoading, isSuccess, isError, data]);
 
-  const loginMutation = useMutation({
-    mutationFn: authService.login,
-    onSuccess: (data) => {
-      setUser(data.user);
-    },
-  });
+  const login = useCallback(async (credentials) => {
+    try {
+      const response = await authService.login(credentials);
+      setUser(response.user);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }, []);
 
-  const logoutMutation = useMutation({
-    mutationFn: authService.logout,
-    onSuccess: () => {
+  const logout = useCallback(async () => {
+    try {
+      await authService.logout();
       setUser(null);
-      window.location.href = '/login';
-    },
-  });
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  }, []);
+
+  const updateProfile = useCallback(async (data) => {
+    const updated = await authService.updateProfile(data);
+    setUser(updated);
+    return updated;
+  }, []);
 
   const value = {
     user,
-    isLoading,
+    isLoading: isLoading || !authChecked,
+    authChecked,
     isAuthenticated: !!user,
-    isSuperAdmin: user?.role === 'super_admin',
-    login: loginMutation.mutateAsync,
-    logout: logoutMutation.mutate,
-    updateProfile: async (data) => {
-      const updated = await authService.updateProfile(data);
-      setUser(updated);
-      return updated;
-    },
+    isSuperAdmin: user?.role === "super_admin",
+    login,
+    logout,
+    updateProfile,
   };
-
+console.log(value?.isSuperAdmin,value.user);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };

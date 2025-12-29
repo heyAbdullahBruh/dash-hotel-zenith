@@ -1,11 +1,11 @@
 // src/App.jsx - Updated with lazy loading
 import React, { Suspense, lazy } from "react";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router";
 import { QueryProvider } from "./providers/QueryProvider";
 import { AuthProvider } from "./contexts/AuthContext";
-import Layout from "./components/layout/Layout";
 import Loader from "./components/ui/Loader/Loader";
 import "./styles/globals.css";
+import ProtectedLayout from "./components/layout/ProtectedLayout";
 
 // Lazy load pages
 const Login = lazy(() => import("./pages/Auth/Login/Login"));
@@ -50,15 +50,11 @@ const PageLoader = () => (
   </div>
 );
 
-const ProtectedLayout = ({ children }) => {
-  return (
-    <Suspense fallback={<Loader fullScreen />}>
-      <Layout />
-    </Suspense>
-  );
-};
-
 const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <Navigate to="/login" replace />,
+  },
   {
     path: "/login",
     element: (
@@ -136,6 +132,52 @@ const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: "bookings",
+        children: [
+          {
+            path: "table",
+            index: true,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <TableBookings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "event",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <EventBookings />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "categories",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <CategoryManagement />
+          </Suspense>
+        ),
+      },
+      {
+        path: "reviews",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ReviewManagement />
+          </Suspense>
+        ),
+      },
+      {
+        path: "admins",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <AdminManagement />
+          </Suspense>
+        ),
       },
       {
         path: "settings",
