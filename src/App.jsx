@@ -34,7 +34,7 @@ const ReviewManagement = lazy(() =>
   import("./pages/ReviewManagement/ReviewManagement")
 );
 const Settings = lazy(() => import("./pages/Settings/Settings"));
-const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+// const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 // Loading fallback component
 const PageLoader = () => (

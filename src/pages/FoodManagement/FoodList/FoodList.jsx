@@ -22,7 +22,7 @@ import {
   faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./FoodList.module.css";
-import { useDebounce } from "../../../hooks/useDebounce";
+import useDebounce from "../../../hooks/useDebounce";
 
 const FoodList = () => {
   const navigate = useNavigate();

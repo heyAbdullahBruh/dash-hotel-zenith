@@ -1,4 +1,3 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSort,
@@ -7,7 +6,6 @@ import {
 //   faChevronLeft,
 //   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import Pagination from "../Pagination/Pagination";
 import styles from "./DataTable.module.css";

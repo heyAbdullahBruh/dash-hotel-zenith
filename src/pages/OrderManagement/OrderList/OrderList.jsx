@@ -21,7 +21,7 @@ import {
   faRefresh,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./OrderList.module.css";
-import { useDebounce } from "../../../hooks/useDebounce";
+import useDebounce  from "../../../hooks/useDebounce";
 
 const ORDER_STATUSES = [
   { value: "", label: "All Statuses" },
