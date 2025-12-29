@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 // AuthContext.jsx
 import React, {
   createContext,
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }) => {
   }, [isLoading, isSuccess, isError, data]);
 
   const login = useCallback(async (credentials) => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const response = await authService.login(credentials);
       setUser(response.user);
@@ -68,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateProfile,
   };
-console.log(value?.isSuperAdmin,value.user);
+// console.log(value?.isSuperAdmin,value.user);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

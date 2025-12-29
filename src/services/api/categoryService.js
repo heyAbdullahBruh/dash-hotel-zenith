@@ -3,7 +3,7 @@ import axios from "./axiosConfig";
 export const categoryService = {
   getAllCategories: async () => {
     const response = await axios.get("/api/admin/categories");
-    return response.data;
+    return response.data?.data;
   },
 
   createCategory: async (categoryData) => {
@@ -26,7 +26,7 @@ export const categoryService = {
         },
       }
     );
-    return response.data;
+    return response.data?.data;
   },
 
   updateCategory: async (categoryId, categoryData) => {
@@ -49,18 +49,18 @@ export const categoryService = {
         },
       }
     );
-    return response.data;
+    return response.data?.data;
   },
 
   deleteCategory: async (categoryId) => {
     const response = await axios.delete(`/api/admin/categories/${categoryId}`);
-    return response.data;
+    return response.data?.data;
   },
 
   toggleCategoryStatus: async (categoryId) => {
     const response = await axios.put(
       `/api/admin/categories/${categoryId}/toggle-status`
     );
-    return response.data;
+    return response.data?.data;
   },
 };

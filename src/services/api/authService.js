@@ -3,7 +3,7 @@ import axios from "./axiosConfig";
 export const authService = {
   login: async (credentials) => {
     const response = await axios.post("/api/admin/login", credentials);
-    return response.data;
+    return response.data?.data;
   },
 
   logout: async () => {
@@ -21,7 +21,7 @@ export const authService = {
 
   updateProfile: async (profileData) => {
     const response = await axios.put("/api/admin/profile", profileData);
-    return response.data;
+    return response.data?.data;
   },
 
   changePassword: async (passwordData) => {
@@ -29,23 +29,23 @@ export const authService = {
       "/api/admin/change-password",
       passwordData
     );
-    return response.data;
+    return response.data?.data;
   },
 
   getAllAdmins: async () => {
     const response = await axios.get("/api/admin/admins");
-    return response.data;
+    return response.data?.data;
   },
 
   createAdmin: async (adminData) => {
     const response = await axios.post("/api/admin/admins/create", adminData);
-    return response.data;
+    return response.data?.data;
   },
 
   toggleAdminStatus: async (adminId) => {
     const response = await axios.put(
       `/api/admin/admins/${adminId}/toggle-status`
     );
-    return response.data;
+    return response.data?.data;
   },
 };

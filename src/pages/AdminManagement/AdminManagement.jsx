@@ -31,6 +31,7 @@ const adminSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
+  password: z.string().min(6, "Password Must 6 length"),
   role: z.enum(["admin", "super_admin"]).default("admin"),
 });
 
@@ -46,7 +47,7 @@ const AdminManagement = () => {
     queryFn: () => authService.getAllAdmins(),
     enabled: user?.role === "super_admin",
   });
-
+  console.log(admins);
   const {
     register,
     handleSubmit,
@@ -255,6 +256,15 @@ const AdminManagement = () => {
             placeholder="admin@hotelzenith.com"
             error={errors.email?.message}
             {...register("email")}
+            fullWidth
+          />
+
+          <Input
+            label="Password"
+            type="password"
+            placeholder="*******"
+            error={errors.password?.message}
+            {...register("password")}
             fullWidth
           />
 
