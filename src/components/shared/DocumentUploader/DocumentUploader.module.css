@@ -1,0 +1,309 @@
+.documentUploader {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    animation: fadeIn 0.5s ease;
+}
+
+.dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 1rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+}
+
+.dropzone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+            rgba(59, 130, 246, 0.05) 0%,
+            rgba(29, 78, 216, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dropzone:hover::before {
+    opacity: 1;
+}
+
+.dropzone:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dropzone.dragActive {
+    border-color: var(--success);
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.05) 0%,
+            rgba(5, 150, 105, 0.05) 100%);
+    animation: pulseBorder 2s infinite;
+}
+
+.uploadIcon {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    animation: bounce 3s infinite;
+}
+
+.dropzoneText {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.dropzoneHint {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    max-width: 300px;
+}
+
+.documentsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    animation: slideIn 0.5s ease;
+}
+
+.documentsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.documentsList::-webkit-scrollbar-track {
+    background: var(--background);
+    border-radius: 3px;
+}
+
+.documentsList::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.documentsList::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+.documentItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: documentAppear 0.5s ease;
+    position: relative;
+}
+
+.documentItem:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+.documentItem::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: var(--primary);
+    border-radius: 0 2px 2px 0;
+    transition: height 0.3s ease;
+}
+
+.documentItem:hover::before {
+    height: 60%;
+}
+
+.documentIcon {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+.documentInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.documentName {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.documentMeta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.documentType {
+    background: var(--background);
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.documentActions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.documentActions button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.documentActions button:hover {
+    transform: scale(1.1);
+}
+
+.counter {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    animation: fadeIn 0.5s ease 0.2s both;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseBorder {
+
+    0%,
+    100% {
+        border-color: var(--success);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes documentAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@media (max-width: 768px) {
+    .dropzone {
+        padding: 2rem;
+    }
+
+    .uploadIcon {
+        font-size: 2.5rem;
+    }
+
+    .dropzoneText {
+        font-size: 1rem;
+    }
+
+    .documentItem {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .documentIcon {
+        align-self: flex-start;
+    }
+
+    .documentActions {
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,142 @@
+.progressBar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.barContainer {
+    position: relative;
+    width: 100%;
+    border-radius: 100px;
+    overflow: hidden;
+    background: var(--background);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: height 0.3s ease;
+}
+
+.barFill {
+    height: 100%;
+    border-radius: 100px;
+    position: relative;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: progressGrow 1s ease-out;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.barFill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%);
+    animation: shimmer 2s infinite linear;
+    border-radius: 100px;
+}
+
+.barFill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    background: white;
+    box-shadow: 0 0 8px white;
+    animation: edgeGlow 2s infinite alternate;
+}
+
+.barInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.barValue {
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.barPercentage {
+    background: var(--surface);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    border: 1px solid var(--border);
+    animation: popIn 0.5s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+@keyframes progressGrow {
+    from {
+        width: 0%;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+
+    to {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes edgeGlow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        box-shadow: 0 0 4px white;
+    }
+
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 12px white;
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    70% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .barInfo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .barPercentage {
+        align-self: flex-end;
+    }
+}
