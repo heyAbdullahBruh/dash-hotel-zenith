@@ -1,0 +1,232 @@
+.toggleWrapper {
+    width: 100%;
+}
+
+.toggleContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.toggleContent:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.toggleContent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(135deg,
+            rgba(59, 130, 246, 0.02) 0%,
+            rgba(29, 78, 216, 0.02) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toggleContent:hover::before {
+    opacity: 1;
+}
+
+.toggleInfo {
+    flex: 1;
+}
+
+.toggleLabel {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.toggleDescription {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.toggle.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.toggleInput {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleTrack {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--border);
+    border-radius: 100px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.toggleTrack::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+            rgba(59, 130, 246, 0.2) 0%,
+            rgba(29, 78, 216, 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toggleInput:checked+.toggleTrack {
+    background: var(--primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.toggleInput:checked+.toggleTrack::before {
+    opacity: 1;
+}
+
+.toggleInput:focus+.toggleTrack {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.toggleThumb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: thumbFloat 3s ease-in-out infinite;
+}
+
+.toggleInput:checked+.toggleTrack .toggleThumb {
+    transform: translateX(100%) translateY(-50%);
+}
+
+/* Sizes */
+.toggle.sm .toggleTrack {
+    width: 40px;
+    height: 20px;
+}
+
+.toggle.sm .toggleThumb {
+    width: 16px;
+    height: 16px;
+    left: 2px;
+}
+
+.toggle.sm .toggleInput:checked+.toggleTrack .toggleThumb {
+    transform: translateX(calc(100% + 4px)) translateY(-50%);
+}
+
+.toggle.md .toggleTrack {
+    width: 50px;
+    height: 24px;
+}
+
+.toggle.md .toggleThumb {
+    width: 20px;
+    height: 20px;
+    left: 2px;
+}
+
+.toggle.md .toggleInput:checked+.toggleTrack .toggleThumb {
+    transform: translateX(calc(100% + 6px)) translateY(-50%);
+}
+
+.toggle.lg .toggleTrack {
+    width: 60px;
+    height: 28px;
+}
+
+.toggle.lg .toggleThumb {
+    width: 24px;
+    height: 24px;
+    left: 2px;
+}
+
+.toggle.lg .toggleInput:checked+.toggleTrack .toggleThumb {
+    transform: translateX(calc(100% + 8px)) translateY(-50%);
+}
+
+/* Hover Effects */
+.toggle:not(.disabled):hover .toggleTrack {
+    transform: scale(1.05);
+}
+
+.toggle:not(.disabled):hover .toggleThumb {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes thumbFloat {
+
+    0%,
+    100% {
+        transform: translateY(-50%);
+    }
+
+    50% {
+        transform: translateY(-50%) scale(1.1);
+    }
+}
+
+.toggleInput:checked+.toggleTrack .toggleThumb {
+    animation: thumbFloatChecked 3s ease-in-out infinite;
+}
+
+@keyframes thumbFloatChecked {
+
+    0%,
+    100% {
+        transform: translateX(100%) translateY(-50%);
+    }
+
+    50% {
+        transform: translateX(100%) translateY(-50%) scale(1.1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .toggleContent {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .toggle {
+        align-self: flex-end;
+    }
+}

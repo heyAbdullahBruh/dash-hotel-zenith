@@ -1,0 +1,482 @@
+.invoiceTemplate {
+    background: white;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    color: #1e293b;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    animation: invoiceAppear 0.6s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.invoiceTemplate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+            var(--primary) 0%,
+            var(--primary-dark) 33%,
+            var(--success) 66%,
+            var(--warning) 100%);
+    animation: gradientFlow 3s linear infinite;
+}
+
+.invoiceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: logoAppear 0.8s ease;
+}
+
+.logo {
+    font-size: 2.5rem;
+    color: var(--primary);
+    background: linear-gradient(135deg,
+            rgba(59, 130, 246, 0.1) 0%,
+            rgba(29, 78, 216, 0.1) 100%);
+    padding: 1rem;
+    border-radius: 0.75rem;
+}
+
+.logoSection h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.invoiceInfo {
+    text-align: right;
+}
+
+.invoiceInfo h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.invoiceMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.metaItem {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.875rem;
+}
+
+.metaItem strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.metaItem span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.infoSections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg,
+            rgba(59, 130, 246, 0.05) 0%,
+            rgba(29, 78, 216, 0.05) 100%);
+    border-radius: 0.75rem;
+    animation: sectionsSlideIn 0.8s ease;
+}
+
+.infoSection h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.infoContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.infoContent strong {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.infoRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.infoRow svg {
+    width: 14px;
+    color: var(--primary);
+}
+
+.itemsTable {
+    margin-bottom: 2rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    animation: tableAppear 0.6s ease 0.2s both;
+}
+
+.itemsTable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.itemsTable thead {
+    background: linear-gradient(90deg,
+            var(--primary) 0%,
+            var(--primary-dark) 100%);
+    color: white;
+}
+
+.itemsTable th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.itemsTable tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--border);
+}
+
+.itemsTable tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateX(4px);
+}
+
+.itemsTable td {
+    padding: 1rem;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.totalsSection {
+    margin-bottom: 2rem;
+    animation: totalsSlideIn 0.8s ease 0.3s both;
+}
+
+.totalsTable {
+    width: 300px;
+    margin-left: auto;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed var(--border);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.totalRowGrand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    margin-top: 0.5rem;
+    border-top: 2px solid var(--primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.paymentSection {
+    background: var(--background);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    animation: paymentAppear 0.6s ease 0.4s both;
+}
+
+.paymentSection h3 {
+    margin: 0 0 1rem 0;
+    color: var(--primary);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.paymentInfo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.paymentRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+}
+
+.paymentRow strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.paymentRow span {
+    color: var(--text-primary);
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status.paid {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status.pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.invoiceFooter {
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    animation: footerAppear 0.6s ease 0.5s both;
+}
+
+.invoiceFooter>p {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.terms {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--background);
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--primary);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.terms p {
+    margin: 0;
+}
+
+.terms strong {
+    color: var(--text-primary);
+}
+
+.footerNote {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footerNote p {
+    margin: 0;
+    font-size: 0.75rem;
+}
+
+/* Animations */
+@keyframes invoiceAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: -800px 0;
+    }
+
+    100% {
+        background-position: 800px 0;
+    }
+}
+
+@keyframes logoAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px) rotate(-10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) rotate(0);
+    }
+}
+
+@keyframes sectionsSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes tableAppear {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+@keyframes totalsSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes paymentAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes footerAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .invoiceTemplate {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+
+    .invoiceHeader {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .invoiceInfo {
+        text-align: left;
+        width: 100%;
+    }
+
+    .infoSections {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .itemsTable {
+        overflow-x: auto;
+    }
+
+    .itemsTable table {
+        min-width: 600px;
+    }
+
+    .totalsTable {
+        width: 100%;
+    }
+
+    .paymentInfo {
+        grid-template-columns: 1fr;
+    }
+
+    .footerNote {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media print {
+    .invoiceTemplate {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .invoiceTemplate::before {
+        display: none;
+    }
+}
