@@ -1,0 +1,473 @@
+.textareaWrapper {
+    position: relative;
+    margin-bottom: 1rem;
+    animation: textareaAppear 0.4s ease;
+}
+
+.textareaWrapper.fullWidth {
+    width: 100%;
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.label:hover {
+    color: var(--primary);
+}
+
+.required {
+    color: var(--danger);
+    margin-left: 0.25rem;
+}
+
+.textareaContainer {
+    position: relative;
+    border-radius: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.textareaContainer:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.textareaContainer:has(.textarea.focused) {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+.textareaContainer:has(.textarea.hasError) {
+    border-color: var(--danger);
+    animation: errorShake 0.5s ease;
+}
+
+.textarea {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    transition: all 0.3s ease;
+    min-height: calc(3 * 1.5em + 2rem);
+    /* 3 rows * line-height + padding */
+}
+
+.textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+.textarea:hover {
+    background: rgba(59, 130, 246, 0.02);
+}
+
+.textarea.focused {
+    background: rgba(59, 130, 246, 0.03);
+}
+
+.textarea.disabled {
+    background: var(--background);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.textarea.noResize {
+    resize: none;
+}
+
+.textarea.expanded {
+    animation: expandTextarea 0.3s ease;
+}
+
+.textareaControls {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--surface);
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s ease;
+}
+
+.textareaContainer:hover .textareaControls,
+.textarea.focused~.textareaControls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.expandButton {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.expandButton:hover:not(:disabled) {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: scale(1.1) rotate(90deg);
+}
+
+.expandButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.expandIcon {
+    font-size: 0.875rem;
+    transition: transform 0.3s ease;
+}
+
+.expandButton:hover:not(:disabled) .expandIcon {
+    transform: scale(1.2);
+}
+
+.characterCount {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: var(--surface);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.count {
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.countWarning {
+    color: var(--warning);
+    animation: countPulse 2s infinite;
+}
+
+.countError {
+    color: var(--danger);
+    animation: countPulse 1s infinite;
+}
+
+.countSeparator {
+    opacity: 0.5;
+}
+
+.countMax {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.focusBorder {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            var(--primary) 0%,
+            var(--primary-dark) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s ease;
+}
+
+.textarea.focused~.focusBorder {
+    transform: scaleX(1);
+}
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    color: var(--danger);
+    font-size: 0.75rem;
+    animation: errorMessageAppear 0.3s ease;
+}
+
+.errorIcon {
+    font-size: 0.875rem;
+    animation: errorIconPulse 1s infinite;
+}
+
+.helperText {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    animation: helperTextAppear 0.3s ease;
+}
+
+.helperIcon {
+    font-size: 0.875rem;
+    opacity: 0.7;
+}
+
+/* Animations */
+@keyframes textareaAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes errorShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes expandTextarea {
+    from {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes countPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes errorMessageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes errorIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes helperTextAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Auto-grow transition */
+.textarea {
+    transition: height 0.2s ease-out, background-color 0.3s ease;
+}
+
+/* Expanded mode styles */
+.textarea.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 80vh;
+    z-index: 9999;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
+    resize: both;
+    animation: fullscreenExpand 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fullscreenExpand {
+    from {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Body overflow hidden when expanded */
+body:has(.textarea.expanded) {
+    overflow: hidden;
+}
+
+/* Custom scrollbar for textarea */
+.textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.textarea::-webkit-scrollbar-track {
+    background: var(--background);
+    border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.textarea:hover::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+}
+
+/* Firefox scrollbar */
+.textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--background);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .textareaContainer {
+        border-radius: 0.5rem;
+    }
+
+    .textarea {
+        padding: 0.875rem;
+        font-size: 0.8125rem;
+    }
+
+    .textareaControls {
+        position: static;
+        opacity: 1;
+        transform: none;
+        margin-top: 0.5rem;
+        justify-content: space-between;
+        background: transparent;
+        padding: 0;
+    }
+
+    .expandButton {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .characterCount {
+        font-size: 0.6875rem;
+    }
+
+    .textarea.expanded {
+        width: 95vw;
+        height: 70vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .label {
+        font-size: 0.8125rem;
+    }
+
+    .textarea {
+        min-height: calc(2 * 1.5em + 1.5rem);
+    }
+
+    .expandButton {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .expandIcon {
+        font-size: 0.75rem;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+    .textareaWrapper,
+    .textareaContainer,
+    .textarea,
+    .textareaControls,
+    .focusBorder,
+    .errorMessage,
+    .helperText,
+    .count,
+    .expandButton {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .textarea.expanded {
+        animation: none;
+    }
+}

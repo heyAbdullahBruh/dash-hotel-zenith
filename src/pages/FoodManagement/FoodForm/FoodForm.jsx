@@ -12,7 +12,6 @@ import Input from "../../../components/ui/Input/Input";
 import Select from "../../../components/ui/Select/Select";
 import Textarea from "../../../components/ui/Textarea/Textarea";
 import ImageUploader from "../../../components/shared/ImageUploader/ImageUploader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSave,
   faTimes,
