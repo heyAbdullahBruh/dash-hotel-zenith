@@ -39,7 +39,7 @@ const Select = forwardRef(
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [isFocused, setIsFocused] = useState(false);
-    const [internalValue, setInternalValue] = useState(value);
+    const [internalValue, setInternalValue] = useState();
     const selectRef = useRef(null);
     const dropdownRef = useRef(null);
 
@@ -52,14 +52,14 @@ const Select = forwardRef(
     );
 
     useEffect(() => {
-      if (value?._id) {
+      if (typeof value === 'object') {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setInternalValue(value?._id);
       } else {
         setInternalValue(value);
       }
     }, [value]);
-
+    console.log(value);
     useEffect(() => {
       const handleClickOutside = (event) => {
         if (

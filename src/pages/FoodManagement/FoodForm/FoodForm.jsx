@@ -39,7 +39,6 @@ const foodSchema = z.object({
     .optional(),
   preparationTime: z.number().min(1).optional(),
   isAvailable: z.boolean().default(true),
-  stock: z.number().min(0).default(0),
 });
 
 const FoodForm = () => {
@@ -47,7 +46,7 @@ const FoodForm = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [images, setImages] = useState([]);
-  const [ingredientInput, setIngredientInput] = useState("");
+  const [ingredientInput, setIngredientInput] = useState([]);
   const isEditing = !!foodId;
 
   // Fetch food data if editing
@@ -56,13 +55,13 @@ const FoodForm = () => {
     queryFn: () => foodService.getFood(foodId),
     enabled: isEditing,
   });
-console.log(foodData?.data);
+  console.log(foodData?.data);
   // Fetch categories
   const { data: categories, isLoading: categoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () => categoryService.getAllCategories(),
   });
-// console.log(categories);
+  // console.log(categories);
   const {
     register,
     handleSubmit,
@@ -75,20 +74,42 @@ console.log(foodData?.data);
       ingredients: [],
       nutritionalInfo: {},
       isAvailable: true,
-      stock: 0,
     },
   });
 
   const ingredients = watch("ingredients");
 
-  // Set form values when food data is loaded
+  // Add this helper function
+  const transformFoodDataForForm = (foodData) => {
+    if (!foodData) return {};
+
+    return {
+      ...foodData,
+      category: foodData.category?._id || foodData.category || "",
+      // Make sure other fields are properly formatted
+      price:
+        typeof foodData.price === "string"
+          ? parseFloat(foodData.price)
+          : foodData.price,
+      discount:
+        typeof foodData.discount === "string"
+          ? parseFloat(foodData.discount)
+          : foodData.discount,
+      nutritionalInfo: foodData.nutritionalInfo || {},
+    };
+  };
+
+  // Update the useEffect
   useEffect(() => {
     if (foodData && isEditing) {
-      Object.keys(foodData?.data).forEach((key) => {
+      const transformedData = transformFoodDataForForm(foodData?.data);
+
+      Object.keys(transformedData).forEach((key) => {
         if (key in foodSchema.shape) {
-          setValue(key, foodData?.data[key]);
+          setValue(key, transformedData[key]);
         }
       });
+
       setImages(foodData?.data?.images || []);
     }
   }, [foodData, isEditing, setValue]);
@@ -106,17 +127,18 @@ console.log(foodData?.data);
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["foods"] });
       queryClient.invalidateQueries({ queryKey: ["food", foodId] });
-      navigate("/foods");
+      // navigate("/foods");
     },
   });
-
+console.log(ingredients);
   const onSubmit = async (data) => {
     try {
       const formData = {
         ...data,
         images,
+        ingredients: Array.isArray(data.ingredients) ? data.ingredients : [],
       };
-
+console.log(formData);
       if (isEditing) {
         await updateMutation.mutateAsync(formData);
       } else {
@@ -326,13 +348,6 @@ console.log(foodData?.data);
               <h3 className={styles.sectionTitle}>Inventory & Availability</h3>
 
               <div className={styles.row}>
-                <Input
-                  label="Stock Quantity"
-                  type="number"
-                  placeholder="0"
-                  {...register("stock", { valueAsNumber: true })}
-                  fullWidth
-                />
                 <Input
                   label="Preparation Time (minutes)"
                   type="number"

@@ -27,28 +27,47 @@ export const foodService = {
     });
 
     const response = await axios.post("/api/admin/foods/create", formData, {
-      withCredentials: true, // required if admin auth uses cookies
+      withCredentials: true, // fors cookies
     });
 
     return response.data;
   },
 
+  // services/api/foodService.js
   updateFood: async (foodId, foodData) => {
     const formData = new FormData();
 
     Object.keys(foodData).forEach((key) => {
-      if (key === "images" && Array.isArray(foodData.images)) {
-        foodData.images.forEach((image) => {
-          formData.append("images", image);
+      const value = foodData[key];
+
+      // Handle file uploads
+      if (key === "images" && Array.isArray(value)) {
+        value.forEach((image) => {
+          if (image instanceof File || image instanceof Blob) {
+            formData.append("images", image);
+          }
         });
-      } else if (Array.isArray(foodData[key])) {
-        formData.append(key, JSON.stringify(foodData[key]));
-      } else {
-        formData.append(key, foodData[key]);
+      }
+      // Handle objects (including nutritionalInfo)
+      else if (typeof value === "object" && value !== null) {
+        // Stringify objects to JSON
+        formData.append(key, JSON.stringify(value));
+      }
+      // Handle arrays (including ingredients)
+      else if (Array.isArray(value)) {
+        // For ingredients, we need to send it as a stringified array
+        formData.append(key, JSON.stringify(value));
+      }
+      // Handle all other values
+      else {
+        if (value !== undefined && value !== null) {
+          formData.append(key, String(value));
+        }
       }
     });
 
     const response = await axios.put(`/api/admin/foods/${foodId}`, formData, {
+      withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",
       },

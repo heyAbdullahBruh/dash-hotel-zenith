@@ -184,13 +184,6 @@ const FoodList = () => {
           <Button
             variant="outline"
             size="sm"
-            icon={faEye}
-            onClick={() => navigate(`/foods/${food._id}`)}
-            title="View Details"
-          />
-          <Button
-            variant="outline"
-            size="sm"
             icon={faEdit}
             onClick={() => navigate(`/foods/${food._id}/edit`)}
             title="Edit"
