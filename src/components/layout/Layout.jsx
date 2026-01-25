@@ -1,8 +1,6 @@
 // Layout.jsx
-import React from "react";
 import { Toaster } from "react-hot-toast";
 import Sidebar from "./Sidebar/Sidebar";
-import Header from "./Header/Header";
 import styles from "./Layout.module.css";
 
 const Layout = ({ children }) => {
@@ -10,7 +8,6 @@ const Layout = ({ children }) => {
     <div className={styles.layout}>
       <Sidebar />
       <div className={styles.mainContent}>
-        <Header />
         <main className={styles.content}>{children}</main>
       </div>
 

@@ -47,6 +47,7 @@ const FoodForm = () => {
   const queryClient = useQueryClient();
   const [images, setImages] = useState([]);
   const [ingredientInput, setIngredientInput] = useState([]);
+  const [ingredients, setIngredientsState] = useState([]);
   const isEditing = !!foodId;
 
   // Fetch food data if editing
@@ -55,13 +56,12 @@ const FoodForm = () => {
     queryFn: () => foodService.getFood(foodId),
     enabled: isEditing,
   });
-  console.log(foodData?.data);
   // Fetch categories
   const { data: categories, isLoading: categoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () => categoryService.getAllCategories(),
   });
-  // console.log(categories);
+
   const {
     register,
     handleSubmit,
@@ -77,7 +77,11 @@ const FoodForm = () => {
     },
   });
 
-  const ingredients = watch("ingredients");
+  const ingredient= watch("ingredients");
+
+  useEffect(() => {
+    setIngredientsState(ingredient || []);
+  }, [ingredient]);
 
   // Add this helper function
   const transformFoodDataForForm = (foodData) => {
@@ -130,7 +134,7 @@ const FoodForm = () => {
       // navigate("/foods");
     },
   });
-console.log(ingredients);
+// console.log(ingredients);
   const onSubmit = async (data) => {
     try {
       const formData = {
@@ -151,13 +155,13 @@ console.log(formData);
 
   const handleAddIngredient = () => {
     if (ingredientInput.trim()) {
-      setValue("ingredients", [...ingredients, ingredientInput.trim()]);
+      setValue("ingredients", [...(ingredients || []), ingredientInput.trim()]);
       setIngredientInput("");
     }
   };
 
   const handleRemoveIngredient = (index) => {
-    const newIngredients = [...ingredients];
+    const newIngredients = [...(ingredients || [])];
     newIngredients.splice(index, 1);
     setValue("ingredients", newIngredients);
   };

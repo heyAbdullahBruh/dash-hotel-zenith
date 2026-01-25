@@ -1,5 +1,5 @@
 // ProtectedLayout.jsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import Layout from "./Layout";

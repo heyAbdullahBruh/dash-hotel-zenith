@@ -59,7 +59,7 @@ const Select = forwardRef(
         setInternalValue(value);
       }
     }, [value]);
-    console.log(value);
+    // console.log(value);
     useEffect(() => {
       const handleClickOutside = (event) => {
         if (
